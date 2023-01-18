@@ -6,10 +6,15 @@ from product.serializers import ProductSerializer
 
 
 # Create your views here.
-@api_view(["GET", "POST"])
+@api_view(["POST"])
 def api_home(request):
-    instance = Product.objects.all().order_by('?').first()
-    data = {}
-    if instance:
-        data = ProductSerializer(instance).data
-    return Response(data)
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        print(serializer.data)
+        data= serializer.data 
+
+    # instance = Product.objects.all().order_by('?').first()
+    # data = {}
+    # if instance:
+    #     data = ProductSerializer(instance).data
+        return Response(data)
